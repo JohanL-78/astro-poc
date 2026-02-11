@@ -8,27 +8,45 @@ export const prerender = false;
 
 const { lang, slug } = Astro.params;
 
-const { data: page } = await loadQuery<any>({
-  query: PAGE_QUERY,
-  params: { language: lang, slug: slug || '' },
-  preview: true,
-});
+let page: any = null;
+let error: string | null = null;
 
-if (!page) {
+try {
+  const result = await loadQuery<any>({
+    query: PAGE_QUERY,
+    params: { language: lang, slug: slug || '' },
+    preview: true,
+  });
+  page = result.data;
+} catch (e) {
+  error = e instanceof Error ? e.message : String(e);
+}
+
+if (!page && !error) {
   return Astro.redirect('/fr/accueil');
 }
 ---
 
-<Layout
-  title={page.seoTitle || page.title}
-  description={page.seoDescription}
-  lang={lang}
-  noIndex={true}
-  translations={page.translations}
-  currentSlug={slug}
-  preview={true}
->
-  <main>
-    {page.content && <PageBuilder sections={page.content} />}
-  </main>
-</Layout>
+{error ? (
+  <html>
+    <body>
+      <h1>Preview Error</h1>
+      <p>Lang: {lang}, Slug: {slug}</p>
+      <pre>{error}</pre>
+    </body>
+  </html>
+) : (
+  <Layout
+    title={page.seoTitle || page.title}
+    description={page.seoDescription}
+    lang={lang}
+    noIndex={true}
+    translations={page.translations}
+    currentSlug={slug}
+    preview={true}
+  >
+    <main>
+      {page.content && <PageBuilder sections={page.content} />}
+    </main>
+  </Layout>
+)}

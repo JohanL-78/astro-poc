@@ -1,0 +1,82 @@
+---
+import { VisualEditing } from '@sanity/astro/visual-editing';
+import { stegaClean } from '@sanity/client/stega';
+
+interface Translation {
+  language: string;
+  slug: string;
+}
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: string;
+  noIndex?: boolean;
+  translations?: Translation[];
+  currentSlug?: string;
+  preview?: boolean;
+}
+
+const {
+  title = 'Astro POC',
+  description,
+  lang = 'fr',
+  noIndex = false,
+  translations = [],
+  currentSlug,
+  preview = false,
+} = Astro.props;
+
+const cleanTitle = stegaClean(title);
+const cleanDescription = stegaClean(description || '');
+const siteUrl = Astro.site?.origin || Astro.url.origin;
+const canonicalUrl = `${siteUrl}/${lang}/${currentSlug || ''}`;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{cleanTitle}</title>
+
+    {cleanDescription && <meta name="description" content={cleanDescription} />}
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+    <link rel="canonical" href={canonicalUrl} />
+
+    {translations?.map((t) => (
+      <link rel="alternate" hreflang={t.language} href={`${siteUrl}/${t.language}/${t.slug}`} />
+    ))}
+    {currentSlug && (
+      <link rel="alternate" hreflang={lang} href={canonicalUrl} />
+    )}
+
+    <meta property="og:title" content={cleanTitle} />
+    {cleanDescription && <meta property="og:description" content={cleanDescription} />}
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={lang === 'fr' ? 'fr_FR' : 'en_US'} />
+    <meta property="og:type" content="website" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+        color: #1a1a1a;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <slot />
+    {preview && <VisualEditing />}
+  </body>
+</html>

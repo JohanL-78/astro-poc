@@ -1,0 +1,23 @@
+---
+import HeroSection from './sections/HeroSection.astro';
+import TextWithImageSection from './sections/TextWithImageSection.astro';
+
+interface Props {
+  sections: any[];
+}
+
+const { sections } = Astro.props;
+---
+
+{sections.map((section) => {
+  switch (section._type) {
+    case 'hero':
+      return <HeroSection section={section} />;
+    case 'textWithImage':
+      return <TextWithImageSection section={section} />;
+    default:
+      return <div style="padding: 2rem; background: #f0f0f0; text-align: center;">
+        <p>Unknown section type: {section._type}</p>
+      </div>;
+  }
+})}

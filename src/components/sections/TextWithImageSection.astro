@@ -1,0 +1,74 @@
+---
+import { urlForImage } from '../../sanity/lib/image';
+import PortableTextRenderer from '../PortableText.astro';
+import { stegaClean } from '@sanity/client/stega';
+
+interface Props {
+  section: any;
+}
+
+const { section } = Astro.props;
+const imageUrl = urlForImage(section.image)?.width(800).height(600).url();
+const imageOnLeft = stegaClean(section.imagePosition) === 'left';
+---
+
+<section class="text-with-image">
+  <div class:list={['grid', { reversed: imageOnLeft }]}>
+    <div class="text-col">
+      <h2>{section.heading}</h2>
+      {section.text && <PortableTextRenderer value={section.text} />}
+    </div>
+    <div class="image-col">
+      {imageUrl && (
+        <img
+          src={imageUrl}
+          alt={section.image?.alt || ''}
+          loading="lazy"
+        />
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .text-with-image {
+    padding: 4rem 2rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: center;
+  }
+
+  .grid.reversed {
+    direction: rtl;
+  }
+
+  .grid.reversed > * {
+    direction: ltr;
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .image-col img {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+
+    .grid.reversed {
+      direction: ltr;
+    }
+  }
+</style>

@@ -1,0 +1,80 @@
+---
+import { urlForImage } from '../../sanity/lib/image';
+
+interface Props {
+  section: any;
+}
+
+const { section } = Astro.props;
+const imageUrl = urlForImage(section.image)?.width(1920).height(800).url();
+---
+
+<section class="hero" style={imageUrl ? `background-image: url(${imageUrl})` : ''}>
+  <div class="hero-overlay">
+    <div class="hero-content">
+      <h1>{section.title}</h1>
+      {section.subtitle && <p class="subtitle">{section.subtitle}</p>}
+      {section.cta?.text && section.cta?.url && (
+        <a href={section.cta.url} class="cta-button">
+          {section.cta.text}
+        </a>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    background-color: #2a2a2a;
+    color: white;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-content {
+    text-align: center;
+    padding: 2rem;
+    max-width: 800px;
+  }
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+  }
+
+  .cta-button {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    background: white;
+    color: #1a1a1a;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 4px;
+    transition: opacity 0.2s;
+  }
+
+  .cta-button:hover {
+    opacity: 0.9;
+  }
+</style>

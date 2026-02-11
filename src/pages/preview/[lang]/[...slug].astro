@@ -1,0 +1,34 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import PageBuilder from '../../../components/PageBuilder.astro';
+import { loadQuery } from '../../../sanity/lib/load-query';
+import { PAGE_QUERY } from '../../../sanity/lib/queries';
+
+export const prerender = false;
+
+const { lang, slug } = Astro.params;
+
+const { data: page } = await loadQuery<any>({
+  query: PAGE_QUERY,
+  params: { language: lang, slug: slug || '' },
+  preview: true,
+});
+
+if (!page) {
+  return Astro.redirect('/fr/accueil');
+}
+---
+
+<Layout
+  title={page.seoTitle || page.title}
+  description={page.seoDescription}
+  lang={lang}
+  noIndex={true}
+  translations={page.translations}
+  currentSlug={slug}
+  preview={true}
+>
+  <main>
+    {page.content && <PageBuilder sections={page.content} />}
+  </main>
+</Layout>

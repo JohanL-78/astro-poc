@@ -1,24 +1,41 @@
+import { type QueryParams } from 'sanity';
 import { sanityClient } from 'sanity:client';
 
 export async function loadQuery<T>({
   query,
-  params = {},
+  params,
   preview = false,
 }: {
   query: string;
-  params?: Record<string, unknown>;
+  params?: QueryParams;
   preview?: boolean;
-}): Promise<{ data: T }> {
+}) {
   const token = import.meta.env.SANITY_API_READ_TOKEN;
-  const perspective = preview ? 'previewDrafts' : 'published';
 
-  const data = await sanityClient.fetch<T>(query, params, {
+  if (preview && !token) {
+    throw new Error(
+      'The `SANITY_API_READ_TOKEN` environment variable is required during Visual Editing.',
+    );
+  }
+
+  const perspective = preview ? 'drafts' : 'published';
+
+  const { result, resultSourceMap } = await sanityClient.fetch<T>(
+    query,
+    params ?? {},
+    {
+      filterResponse: false,
+      perspective,
+      resultSourceMap: preview ? 'withKeyArraySelector' : false,
+      stega: preview,
+      ...(preview ? { token } : {}),
+      useCdn: !preview,
+    },
+  );
+
+  return {
+    data: result,
+    sourceMap: resultSourceMap,
     perspective,
-    stega: preview,
-    ...(preview && token ? { token } : {}),
-    resultSourceMap: preview ? 'withKeyArraySelector' : false,
-    useCdn: !preview,
-  });
-
-  return { data };
+  };
 }

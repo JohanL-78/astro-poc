@@ -14,6 +14,7 @@ export default defineConfig({
       projectId: 'dd2las0t',
       dataset: 'production',
       useCdn: false,
+      apiVersion: '2025-01-28',
       studioBasePath: '/studio',
       stega: {
         studioUrl: '/studio',

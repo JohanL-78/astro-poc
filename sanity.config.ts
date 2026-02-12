@@ -16,9 +16,7 @@ export default defineConfig({
     structureTool(),
     presentationTool({
       resolve,
-      previewUrl: {
-        origin: 'https://astro-poc-2lh.pages.dev',
-      },
+      previewUrl: 'https://astro-poc-2lh.pages.dev/preview/fr/accueil',
     }),
   ],
   schema: {

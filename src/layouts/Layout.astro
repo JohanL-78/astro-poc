@@ -1,5 +1,5 @@
 ---
-import DebouncedVisualEditing from '../components/DebouncedVisualEditing';
+import { VisualEditing } from '@sanity/astro/visual-editing';
 import { stegaClean } from '@sanity/client/stega';
 
 interface Translation {
@@ -77,6 +77,6 @@ const canonicalUrl = `${siteUrl}/${lang}/${currentSlug || ''}`;
   </head>
   <body>
     <slot />
-    {preview && <DebouncedVisualEditing client:only="react" />}
+    <VisualEditing enabled={preview} />
   </body>
 </html>

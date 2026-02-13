@@ -34,7 +34,7 @@ export default defineConfig({
     }),
     presentationTool({
       resolve,
-      previewUrl: '/preview/fr/accueil',
+      previewUrl: 'https://astro-poc-2lh.pages.dev/preview/fr/accueil',
     }),
   ],
   schema: {

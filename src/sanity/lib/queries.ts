@@ -53,8 +53,27 @@ export const PAGE_QUERY = `*[_type == "page" && language == $language && slug.cu
       title,
       description,
       image,
-      link
+      link,
+      // faq
+      question,
+      answer,
+      // testimonials
+      quote,
+      author,
+      role,
+      // stats
+      value,
+      label,
+      suffix
     },
-    columns
+    columns,
+    // cta section
+    primaryCta,
+    secondaryCta,
+    variant,
+    // formEmbed
+    tallyFormId,
+    // richText
+    content
   }
 }`;

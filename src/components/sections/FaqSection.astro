@@ -1,0 +1,75 @@
+---
+interface Props {
+  section: any;
+}
+
+const { section } = Astro.props;
+---
+
+<section class="faq-section">
+  {section.heading && <h2>{section.heading}</h2>}
+  <div class="faq-list">
+    {section.items?.map((item: any) => (
+      <details class="faq-item">
+        <summary>{item.question}</summary>
+        <p>{item.answer}</p>
+      </details>
+    ))}
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    padding: var(--space-3xl) var(--space-xl);
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  h2 {
+    font-size: var(--text-4xl);
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-md) 0;
+  }
+
+  .faq-item summary {
+    font-weight: 600;
+    font-size: var(--text-lg);
+    cursor: pointer;
+    padding: var(--space-sm) 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .faq-item summary::after {
+    content: '+';
+    font-size: var(--text-xl);
+    font-weight: 300;
+    transition: transform var(--transition-base);
+  }
+
+  .faq-item[open] summary::after {
+    transform: rotate(45deg);
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item p {
+    padding: var(--space-sm) 0 var(--space-md);
+    color: var(--color-text-light);
+    line-height: 1.7;
+  }
+</style>

@@ -1,0 +1,32 @@
+---
+import PortableTextRenderer from '../PortableText.astro';
+
+interface Props {
+  section: any;
+}
+
+const { section } = Astro.props;
+---
+
+<section class="rich-text-section">
+  <div class="rich-text-content">
+    {section.heading && <h2>{section.heading}</h2>}
+    {section.content && <PortableTextRenderer value={section.content} />}
+  </div>
+</section>
+
+<style>
+  .rich-text-section {
+    padding: var(--space-3xl) var(--space-xl);
+  }
+
+  .rich-text-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-lg);
+  }
+</style>

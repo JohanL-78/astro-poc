@@ -1,0 +1,108 @@
+---
+import { stegaClean } from '@sanity/client/stega';
+
+interface Props {
+  section: any;
+}
+
+const { section } = Astro.props;
+const variant = stegaClean(section.variant) || 'default';
+---
+
+<section class:list={['cta-section', `cta-${variant}`]}>
+  <div class="cta-content">
+    {section.heading && <h2>{section.heading}</h2>}
+    {section.text && <p>{section.text}</p>}
+    <div class="cta-buttons">
+      {section.primaryCta?.text && section.primaryCta?.url && (
+        <a href={section.primaryCta.url} class="btn btn-primary">
+          {section.primaryCta.text}
+        </a>
+      )}
+      {section.secondaryCta?.text && section.secondaryCta?.url && (
+        <a href={section.secondaryCta.url} class="btn btn-secondary">
+          {section.secondaryCta.text}
+        </a>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section {
+    padding: var(--space-3xl) var(--space-xl);
+    text-align: center;
+  }
+
+  .cta-default {
+    background: var(--color-bg-alt, #f8f9fa);
+  }
+
+  .cta-accent {
+    background: var(--color-accent, #2563eb);
+    color: var(--color-text-inverse, #fff);
+  }
+
+  .cta-dark {
+    background: var(--color-bg-dark, #1a1a2e);
+    color: var(--color-text-inverse, #fff);
+  }
+
+  .cta-content {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-md);
+  }
+
+  p {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-xl);
+    opacity: 0.9;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: opacity var(--transition-base);
+  }
+
+  .btn:hover {
+    opacity: 0.9;
+  }
+
+  .cta-default .btn-primary {
+    background: var(--color-accent, #2563eb);
+    color: var(--color-text-inverse, #fff);
+  }
+
+  .cta-default .btn-secondary {
+    border: 2px solid var(--color-accent, #2563eb);
+    color: var(--color-accent, #2563eb);
+  }
+
+  .cta-accent .btn-primary,
+  .cta-dark .btn-primary {
+    background: var(--color-text-inverse, #fff);
+    color: var(--color-text, #1a1a2e);
+  }
+
+  .cta-accent .btn-secondary,
+  .cta-dark .btn-secondary {
+    border: 2px solid var(--color-text-inverse, #fff);
+    color: var(--color-text-inverse, #fff);
+  }
+</style>

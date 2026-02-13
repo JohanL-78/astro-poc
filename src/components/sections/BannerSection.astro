@@ -1,0 +1,69 @@
+---
+import { stegaClean } from '@sanity/client/stega';
+
+interface Props {
+  section: any;
+}
+
+const { section } = Astro.props;
+const variant = stegaClean(section.variant) || 'info';
+---
+
+<section class:list={['banner-section', `banner-${variant}`]}>
+  <div class="banner-content">
+    <p>{section.text}</p>
+    {section.link?.text && section.link?.url && (
+      <a href={section.link.url} class="banner-link">
+        {section.link.text} &rarr;
+      </a>
+    )}
+  </div>
+</section>
+
+<style>
+  .banner-section {
+    padding: var(--space-md) var(--space-xl);
+  }
+
+  .banner-info {
+    background: var(--color-bg-alt, #e8f4fd);
+    color: var(--color-text, #1a1a2e);
+  }
+
+  .banner-warning {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  .banner-accent {
+    background: var(--color-accent, #2563eb);
+    color: var(--color-text-inverse, #fff);
+  }
+
+  .banner-content {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  p {
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .banner-link {
+    font-weight: 600;
+    text-decoration: underline;
+    color: inherit;
+    white-space: nowrap;
+  }
+
+  .banner-link:hover {
+    opacity: 0.8;
+  }
+</style>

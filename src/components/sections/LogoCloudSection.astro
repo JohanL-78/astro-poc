@@ -1,0 +1,84 @@
+---
+import { urlForImage } from '../../sanity/lib/image';
+
+interface Props {
+  section: any;
+}
+
+const { section } = Astro.props;
+---
+
+<section class="logo-cloud-section">
+  {section.heading && <h2>{section.heading}</h2>}
+  <div class="logo-grid">
+    {section.items?.map((item: any) => {
+      const logoUrl = urlForImage(item.image)?.height(60).url();
+      const Tag = item.link ? 'a' : 'div';
+      return (
+        <Tag
+          class="logo-item"
+          {...(item.link ? { href: item.link, target: '_blank', rel: 'noopener noreferrer' } : {})}
+        >
+          {logoUrl && (
+            <img
+              src={logoUrl}
+              alt={item.image?.alt || ''}
+              loading="lazy"
+            />
+          )}
+        </Tag>
+      );
+    })}
+  </div>
+</section>
+
+<style>
+  .logo-cloud-section {
+    padding: var(--space-3xl) var(--space-xl);
+    text-align: center;
+  }
+
+  h2 {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .logo-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-2xl);
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+    transition: opacity var(--transition-base);
+    text-decoration: none;
+  }
+
+  .logo-item:hover {
+    opacity: 1;
+  }
+
+  .logo-item img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  @media (max-width: 640px) {
+    .logo-grid {
+      gap: var(--space-xl);
+    }
+
+    .logo-item img {
+      height: 32px;
+    }
+  }
+</style>

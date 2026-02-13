@@ -1,0 +1,65 @@
+---
+interface Props {
+  section: any;
+}
+
+const { section } = Astro.props;
+---
+
+<section class="stats-section">
+  {section.heading && <h2>{section.heading}</h2>}
+  <div class="stats-grid">
+    {section.items?.map((item: any) => (
+      <div class="stat-item">
+        <span class="stat-value">
+          {item.value}{item.suffix && <span class="stat-suffix">{item.suffix}</span>}
+        </span>
+        <span class="stat-label">{item.label}</span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .stats-section {
+    padding: var(--space-3xl) var(--space-xl);
+    text-align: center;
+  }
+
+  h2 {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-xl);
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .stat-value {
+    font-size: var(--text-5xl);
+    font-weight: 700;
+    color: var(--color-accent, #2563eb);
+    line-height: 1;
+  }
+
+  .stat-suffix {
+    font-size: var(--text-3xl);
+  }
+
+  .stat-label {
+    font-size: var(--text-sm);
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+</style>

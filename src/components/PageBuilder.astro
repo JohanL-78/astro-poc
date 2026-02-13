@@ -2,6 +2,14 @@
 import HeroSection from './sections/HeroSection.astro';
 import TextWithImageSection from './sections/TextWithImageSection.astro';
 import GridSection from './sections/GridSection.astro';
+import CtaSection from './sections/CtaSection.astro';
+import FaqSection from './sections/FaqSection.astro';
+import TestimonialsSection from './sections/TestimonialsSection.astro';
+import BannerSection from './sections/BannerSection.astro';
+import StatsSection from './sections/StatsSection.astro';
+import LogoCloudSection from './sections/LogoCloudSection.astro';
+import FormEmbedSection from './sections/FormEmbedSection.astro';
+import RichTextSection from './sections/RichTextSection.astro';
 
 interface Props {
   sections: any[];
@@ -18,6 +26,22 @@ const { sections } = Astro.props;
       return <TextWithImageSection section={section} />;
     case 'grid':
       return <GridSection section={section} />;
+    case 'cta':
+      return <CtaSection section={section} />;
+    case 'faq':
+      return <FaqSection section={section} />;
+    case 'testimonials':
+      return <TestimonialsSection section={section} />;
+    case 'banner':
+      return <BannerSection section={section} />;
+    case 'stats':
+      return <StatsSection section={section} />;
+    case 'logoCloud':
+      return <LogoCloudSection section={section} />;
+    case 'formEmbed':
+      return <FormEmbedSection section={section} />;
+    case 'richText':
+      return <RichTextSection section={section} />;
     default:
       return <div style="padding: 2rem; background: #f0f0f0; text-align: center;">
         <p>Unknown section type: {section._type}</p>

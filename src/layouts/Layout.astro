@@ -1,6 +1,9 @@
 ---
 import { VisualEditing } from '@sanity/astro/visual-editing';
 import { stegaClean } from '@sanity/client/stega';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
 
 interface Translation {
   language: string;
@@ -15,6 +18,7 @@ interface Props {
   translations?: Translation[];
   currentSlug?: string;
   preview?: boolean;
+  settings?: any;
 }
 
 const {
@@ -25,6 +29,7 @@ const {
   translations = [],
   currentSlug,
   preview = false,
+  settings,
 } = Astro.props;
 
 const cleanTitle = stegaClean(title);
@@ -57,26 +62,16 @@ const canonicalUrl = `${siteUrl}/${lang}/${currentSlug || ''}`;
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:locale" content={lang === 'fr' ? 'fr_FR' : 'en_US'} />
     <meta property="og:type" content="website" />
-
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      body {
-        font-family: system-ui, -apple-system, sans-serif;
-        line-height: 1.6;
-        color: #1a1a1a;
-      }
-      img {
-        max-width: 100%;
-        height: auto;
-      }
-    </style>
   </head>
   <body>
+    <Header
+      settings={settings}
+      lang={lang}
+      translations={translations}
+      currentSlug={currentSlug}
+    />
     <slot />
+    <Footer settings={settings} lang={lang} />
     <VisualEditing enabled={preview} />
   </body>
 </html>

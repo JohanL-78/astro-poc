@@ -1,3 +1,28 @@
+export const SITE_SETTINGS_QUERY = `*[_id == "siteSettings"][0]{
+  siteName,
+  logo{
+    ...,
+    asset->
+  },
+  navItemsFr[]{
+    _key,
+    label,
+    url
+  },
+  navItemsEn[]{
+    _key,
+    label,
+    url
+  },
+  footerTextFr,
+  footerTextEn,
+  socialLinks[]{
+    _key,
+    platform,
+    url
+  }
+}`;
+
 export const ALL_PAGES_QUERY = `*[_type == "page"]{
   "slug": slug.current,
   language

@@ -32,14 +32,14 @@ const imageOnLeft = stegaClean(section.imagePosition) === 'left';
 
 <style>
   .text-with-image {
-    padding: 4rem 2rem;
+    padding: var(--space-3xl) var(--space-xl);
   }
 
   .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    max-width: 1200px;
+    gap: var(--space-2xl);
+    max-width: var(--max-width);
     margin: 0 auto;
     align-items: center;
   }
@@ -53,13 +53,13 @@ const imageOnLeft = stegaClean(section.imagePosition) === 'left';
   }
 
   h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-md);
   }
 
   .image-col img {
     width: 100%;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
   }
 
   @media (max-width: 768px) {

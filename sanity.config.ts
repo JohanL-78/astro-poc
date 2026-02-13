@@ -13,10 +13,28 @@ export default defineConfig({
   projectId,
   dataset,
   plugins: [
-    structureTool(),
+    structureTool({
+      structure: (S) =>
+        S.list()
+          .title('Content')
+          .items([
+            S.listItem()
+              .title('Site Settings')
+              .id('siteSettings')
+              .child(
+                S.document()
+                  .schemaType('siteSettings')
+                  .documentId('siteSettings')
+              ),
+            S.divider(),
+            ...S.documentTypeListItems().filter(
+              (listItem) => !['siteSettings'].includes(listItem.getId()!)
+            ),
+          ]),
+    }),
     presentationTool({
       resolve,
-      previewUrl: 'https://astro-poc-2lh.pages.dev/preview/fr/accueil',
+      previewUrl: '/preview/fr/accueil',
     }),
   ],
   schema: {

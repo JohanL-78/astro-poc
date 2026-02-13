@@ -1,0 +1,62 @@
+---
+interface Translation {
+  language: string;
+  slug: string;
+}
+
+interface Props {
+  lang: string;
+  translations?: Translation[];
+  currentSlug?: string;
+}
+
+const { lang, translations = [], currentSlug } = Astro.props;
+
+const languages = [
+  { code: 'fr', label: 'FR' },
+  { code: 'en', label: 'EN' },
+];
+---
+
+<div class="lang-switcher">
+  {languages.map((l) => {
+    if (l.code === lang) {
+      return <span class="lang-item active">{l.label}</span>;
+    }
+    const translation = translations.find((t) => t.language === l.code);
+    if (translation) {
+      return <a href={`/${l.code}/${translation.slug}`} class="lang-item">{l.label}</a>;
+    }
+    return <span class="lang-item disabled">{l.label}</span>;
+  })}
+</div>
+
+<style>
+  .lang-switcher {
+    display: flex;
+    gap: var(--space-xs);
+    align-items: center;
+  }
+
+  .lang-item {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition-fast);
+  }
+
+  .lang-item.active {
+    background-color: var(--color-text);
+    color: var(--color-text-inverse);
+  }
+
+  a.lang-item:hover {
+    background-color: var(--color-bg-alt);
+  }
+
+  .lang-item.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+</style>

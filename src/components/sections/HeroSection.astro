@@ -32,14 +32,14 @@ const imageUrl = urlForImage(section.image)?.width(1920).height(800).url();
     justify-content: center;
     background-size: cover;
     background-position: center;
-    background-color: #2a2a2a;
-    color: white;
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-inverse);
   }
 
   .hero-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--color-overlay);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -47,31 +47,31 @@ const imageUrl = urlForImage(section.image)?.width(1920).height(800).url();
 
   .hero-content {
     text-align: center;
-    padding: 2rem;
+    padding: var(--space-xl);
     max-width: 800px;
   }
 
   h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    line-height: 1.2;
+    font-size: var(--text-5xl);
+    margin-bottom: var(--space-md);
+    line-height: var(--line-height-tight);
   }
 
   .subtitle {
-    font-size: 1.25rem;
-    margin-bottom: 2rem;
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-xl);
     opacity: 0.9;
   }
 
   .cta-button {
     display: inline-block;
     padding: 0.75rem 2rem;
-    background: white;
-    color: #1a1a1a;
+    background: var(--color-text-inverse);
+    color: var(--color-text);
     text-decoration: none;
     font-weight: 600;
-    border-radius: 4px;
-    transition: opacity 0.2s;
+    border-radius: var(--radius-sm);
+    transition: opacity var(--transition-base);
   }
 
   .cta-button:hover {

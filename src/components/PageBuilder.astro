@@ -1,6 +1,7 @@
 ---
 import HeroSection from './sections/HeroSection.astro';
 import TextWithImageSection from './sections/TextWithImageSection.astro';
+import GridSection from './sections/GridSection.astro';
 
 interface Props {
   sections: any[];
@@ -15,6 +16,8 @@ const { sections } = Astro.props;
       return <HeroSection section={section} />;
     case 'textWithImage':
       return <TextWithImageSection section={section} />;
+    case 'grid':
+      return <GridSection section={section} />;
     default:
       return <div style="padding: 2rem; background: #f0f0f0; text-align: center;">
         <p>Unknown section type: {section._type}</p>

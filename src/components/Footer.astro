@@ -1,0 +1,89 @@
+---
+import { stegaClean } from '@sanity/client/stega';
+
+interface Props {
+  settings: any;
+  lang: string;
+}
+
+const { settings, lang } = Astro.props;
+
+const footerText = lang === 'en' ? settings?.footerTextEn : settings?.footerTextFr;
+const socialLinks = settings?.socialLinks;
+const currentYear = new Date().getFullYear();
+const siteName = stegaClean(settings?.siteName) || 'Site';
+---
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    {footerText && <p class="footer-text">{footerText}</p>}
+
+    {socialLinks?.length > 0 && (
+      <div class="social-links">
+        {socialLinks.map((link: any) => (
+          <a
+            href={stegaClean(link.url)}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-link"
+          >
+            {stegaClean(link.platform)}
+          </a>
+        ))}
+      </div>
+    )}
+
+    <p class="copyright">
+      &copy; {currentYear} {settings?.siteName || 'Site'}
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-bg-dark);
+    color: var(--color-text-inverse);
+    padding: var(--space-3xl) var(--space-xl);
+  }
+
+  .footer-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  .footer-text {
+    font-size: var(--text-base);
+    max-width: 600px;
+    opacity: 0.9;
+  }
+
+  .social-links {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .social-link {
+    color: var(--color-text-inverse);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-transform: capitalize;
+    opacity: 0.8;
+    transition: opacity var(--transition-fast);
+  }
+
+  .social-link:hover {
+    opacity: 1;
+  }
+
+  .copyright {
+    font-size: var(--text-sm);
+    opacity: 0.6;
+  }
+</style>

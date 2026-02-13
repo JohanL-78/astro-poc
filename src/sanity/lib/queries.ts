@@ -32,10 +32,7 @@ export const PAGE_QUERY = `*[_type == "page" && language == $language && slug.cu
   slug,
   seoTitle,
   seoDescription,
-  seoImage{
-    ...,
-    asset->
-  },
+  seoImage,
   noIndex,
   "translations": translations[]->{
     language,
@@ -48,20 +45,14 @@ export const PAGE_QUERY = `*[_type == "page" && language == $language && slug.cu
     subtitle,
     heading,
     text,
-    image{
-      ...,
-      asset->
-    },
+    image,
     imagePosition,
     cta,
     items[]{
       _key,
       title,
       description,
-      image{
-        ...,
-        asset->
-      },
+      image,
       link
     },
     columns

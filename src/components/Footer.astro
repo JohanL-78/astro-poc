@@ -1,6 +1,7 @@
 ---
 import { stegaClean } from '@sanity/client/stega';
 
+
 interface Props {
   settings: any;
   lang: string;
@@ -10,8 +11,6 @@ const { settings, lang } = Astro.props;
 
 const footerText = lang === 'en' ? settings?.footerTextEn : settings?.footerTextFr;
 const socialLinks = settings?.socialLinks;
-const currentYear = new Date().getFullYear();
-const siteName = stegaClean(settings?.siteName) || 'Site';
 ---
 
 <footer class="site-footer">
@@ -33,9 +32,6 @@ const siteName = stegaClean(settings?.siteName) || 'Site';
       </div>
     )}
 
-    <p class="copyright">
-      &copy; {currentYear} {settings?.siteName || 'Site'}
-    </p>
   </div>
 </footer>
 
@@ -82,8 +78,4 @@ const siteName = stegaClean(settings?.siteName) || 'Site';
     opacity: 1;
   }
 
-  .copyright {
-    font-size: var(--text-sm);
-    opacity: 0.6;
-  }
 </style>

@@ -1,9 +1,6 @@
 export const SITE_SETTINGS_QUERY = `*[_id == "siteSettings"][0]{
   siteName,
-  logo{
-    ...,
-    asset->
-  },
+  logo,
   navItemsFr[]{
     _key,
     label,
